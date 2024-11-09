@@ -1,16 +1,16 @@
 name: User Added to Administrative Group version 2
-id: 4658fef2-74fe-4915-985a-3b0fe63a6a98
+id: 5244e69e-7492-4a00-9db7-1a996d483036
 version: 1
 date: '2024-11-08'
 author: Cam Hughey
 data_sources: []
 type: Anomaly
 status: production
-description: This is the description of the detection that appears in faint grey text below the name of the alert
+description: v2 description, it don't matter whatchu put here dawg
 search: '| spath input=_raw path="Event.System.TimeCreated{@SystemTime}" output=TimeCreated | spath input=_raw path=Event.EventData.Data{9} output=GUID | spath input=_raw path=Event.System.Computer output=InitiatingDevice | spath input=_raw path=Event.EventData.Data{4} output=InitiatingUser | rex field=AttributeValue "cn=(?<Username>[^,]+)" | rex field=GUID "CN=(?<GroupMembership>[^,]+)" | rename name as EventDescription | where like(GUID, "%Admin%") | table TimeCreated, InitiatingUser, InitiatingDevice, EventDescription, Username,
-  GroupMembership, AttributeValue, GUID | `user_added_to_administrative_group_filter`'
-how_to_implement: Idk, Google it?
-known_false_positives: When an IT admin says it's chill
+  GroupMembership, AttributeValue, GUID | `user_added_to_administrative_group_version_2_filter`'
+how_to_implement: Put how to implement here
+known_false_positives: False positives go here
 references:
 - https://attack.mitre.org/techniques/T1078/003/
 drilldown_searches:
@@ -48,5 +48,5 @@ tests:
 - name: True Positive Test
   attack_data:
   - data: https://github.com/splunk/contentctl/wiki
-    sourcetype: ActiveDirectory
-    source: ActiveDirectory
+    sourcetype: UPDATE SOURCETYPE
+    source: UPDATE SOURCE
